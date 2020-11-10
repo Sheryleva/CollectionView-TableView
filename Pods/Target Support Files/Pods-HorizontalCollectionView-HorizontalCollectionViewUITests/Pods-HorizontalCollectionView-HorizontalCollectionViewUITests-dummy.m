@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_HorizontalCollectionView_HorizontalCollectionViewUITests : NSObject
+@end
+@implementation PodsDummy_Pods_HorizontalCollectionView_HorizontalCollectionViewUITests
+@end

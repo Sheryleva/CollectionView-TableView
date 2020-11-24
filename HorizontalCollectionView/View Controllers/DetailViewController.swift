@@ -21,6 +21,7 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var receiveText: UITextView!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clear
@@ -33,6 +34,9 @@ class DetailViewController: UIViewController {
     }
     
     
+    @IBAction func ExitDetailVC(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
     
 
    

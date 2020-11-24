@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "7B6DE443-FC52-42E1-BBEB-69EE73E0A86D"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "35AE95AB-7491-4E1C-A0F8-E7E5C64ED2C6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HorizontalCollectionView/View Controllers/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "ViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "35AE95AB-7491-4E1C-A0F8-E7E5C64ED2C6 - c53f86937e20f419"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HorizontalCollectionView.ViewController.VM.getter : HorizontalCollectionView.ViewModel"
+                  moduleName = "HorizontalCollectionView"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sherylevangelene/Desktop/Training%20files/HorizontalCollectionView/HorizontalCollectionView/View%20Controllers/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "122">
+               </Location>
+               <Location
+                  uuid = "35AE95AB-7491-4E1C-A0F8-E7E5C64ED2C6 - 9437ae7b2186fc15"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HorizontalCollectionView.ViewController.VM.setter : HorizontalCollectionView.ViewModel"
+                  moduleName = "HorizontalCollectionView"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sherylevangelene/Desktop/Training%20files/HorizontalCollectionView/HorizontalCollectionView/View%20Controllers/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "148">
+               </Location>
+               <Location
+                  uuid = "35AE95AB-7491-4E1C-A0F8-E7E5C64ED2C6 - 736a4da1077c58ef"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HorizontalCollectionView.ViewController.VM.modify : HorizontalCollectionView.ViewModel"
+                  moduleName = "HorizontalCollectionView"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sherylevangelene/Desktop/Training%20files/HorizontalCollectionView/HorizontalCollectionView/View%20Controllers/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "18">
+               </Location>
+               <Location
+                  uuid = "35AE95AB-7491-4E1C-A0F8-E7E5C64ED2C6 - bf8204db754d4054"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HorizontalCollectionView.ViewController.VM.modify : HorizontalCollectionView.ViewModel with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "HorizontalCollectionView"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sherylevangelene/Desktop/Training%20files/HorizontalCollectionView/HorizontalCollectionView/View%20Controllers/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "35AE95AB-7491-4E1C-A0F8-E7E5C64ED2C6 - 94bfd2a0b68afd4d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HorizontalCollectionView.ViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; HorizontalCollectionView.ViewController"
+                  moduleName = "HorizontalCollectionView"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sherylevangelene/Desktop/Training%20files/HorizontalCollectionView/HorizontalCollectionView/View%20Controllers/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "312">
+               </Location>
+               <Location
+                  uuid = "35AE95AB-7491-4E1C-A0F8-E7E5C64ED2C6 - 4445ac42350d2380"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HorizontalCollectionView.ViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;HorizontalCollectionView.ViewController&gt;"
+                  moduleName = "HorizontalCollectionView"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sherylevangelene/Desktop/Training%20files/HorizontalCollectionView/HorizontalCollectionView/View%20Controllers/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "253">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

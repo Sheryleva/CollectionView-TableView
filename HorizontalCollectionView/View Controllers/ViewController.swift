@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     var arrP: [Movie] = []
     var arrNS: [Movie] = []
     var DetailVC = DetailViewController()
+    let imageCache = NSCache<NSString, UIImage>()
     
     @IBOutlet weak var collView: UICollectionView!
     
@@ -31,11 +32,7 @@ class ViewController: UIViewController {
         getPopularMovies()
         getNowPlayingMovies()
         registerNib()
-        
-        
     }
-    
-    
     
     
     func getPopularMovies() {
@@ -81,6 +78,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let image = UIImage(data: imageData)
         guard var imge = image else {return UITableViewCell()}
         imge = resizeImage(image: imge, targetSize: CGSize(width: 80, height: 128))
+        self.imageCache.setObject(imge, forKey: NSString(string: img))
         cell.title.text = name
         cell.imageView?.image = imge
         cell.relse.text = release
@@ -110,11 +108,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         vc.titl = name
         vc.rele = release
         vc.text = arrP[indexPath.row].overview
-        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(blurEffectView)
+
         navigationController?.present(vc, animated: true)
         
     }
@@ -138,6 +132,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
             let image = UIImage(data: imageData)
             guard var imge = image else {return UICollectionViewCell()}
             imge = resizeImage(image: imge, targetSize: CGSize(width: 128, height: 200))
+            self.imageCache.setObject(imge, forKey: NSString(string: img))
             cell.configureCell(image: imge)
             return cell
         }
@@ -165,7 +160,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         vc.rele = release
         vc.text = arrP[indexPath.row].overview
         
-        navigationController?.pushViewController(vc, animated: true)
+        navigationController?.present(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -201,10 +196,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size
-
+        
         let widthRatio  = targetSize.width  / image.size.width
         let heightRatio = targetSize.height / image.size.height
-
+        
         // Figure out what our orientation is, and use that to form the rectangle
         var newSize: CGSize
         if(widthRatio > heightRatio) {
@@ -212,16 +207,16 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         } else {
             newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
         }
-
+        
         // This is the rect that we've calculated out and this is what is actually used below
         let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-
+        
         // Actually do the resizing to the rect using the ImageContext stuff
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
         image.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-
+        
         return newImage!
     }
     

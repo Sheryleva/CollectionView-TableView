@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34505D662562EE39003DC56C /* ScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34505D652562EE39003DC56C /* ScrollViewController.swift */; };
 		3450E4112558BC070023BF0D /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3450E40F2558BC070023BF0D /* CustomTableViewCell.swift */; };
 		3450E4122558BC070023BF0D /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3450E4102558BC070023BF0D /* CustomTableViewCell.xib */; };
 		345B77BC255B2E75008E4FF9 /* ProgressRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345B77BB255B2E75008E4FF9 /* ProgressRingView.swift */; };
@@ -47,6 +48,7 @@
 /* Begin PBXFileReference section */
 		147F45FF3A290B80818893DA /* Pods_HorizontalCollectionView_HorizontalCollectionViewUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HorizontalCollectionView_HorizontalCollectionViewUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		307F1FF4CF1CFD2E5274F8E9 /* Pods-HorizontalCollectionView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HorizontalCollectionView.release.xcconfig"; path = "Target Support Files/Pods-HorizontalCollectionView/Pods-HorizontalCollectionView.release.xcconfig"; sourceTree = "<group>"; };
+		34505D652562EE39003DC56C /* ScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewController.swift; sourceTree = "<group>"; };
 		3450E40F2558BC070023BF0D /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		3450E4102558BC070023BF0D /* CustomTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewCell.xib; sourceTree = "<group>"; };
 		345B77BB255B2E75008E4FF9 /* ProgressRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressRingView.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 			children = (
 				347F0AE72555A617005D60BC /* ViewController.swift */,
 				347F0B162555A939005D60BC /* DetailViewController.swift */,
+				34505D652562EE39003DC56C /* ScrollViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -212,7 +215,6 @@
 				614BFCDB4F66618C1B932FBC /* Pods-HorizontalCollectionViewTests.debug.xcconfig */,
 				BEBB1BCA11C6C9F787D160EF /* Pods-HorizontalCollectionViewTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -473,6 +475,7 @@
 				345B77BC255B2E75008E4FF9 /* ProgressRingView.swift in Sources */,
 				347F0AE42555A617005D60BC /* AppDelegate.swift in Sources */,
 				3450E4112558BC070023BF0D /* CustomTableViewCell.swift in Sources */,
+				34505D662562EE39003DC56C /* ScrollViewController.swift in Sources */,
 				347F0AE62555A617005D60BC /* SceneDelegate.swift in Sources */,
 				347F0B352555B6AB005D60BC /* ViewModel.swift in Sources */,
 				347F0B172555A939005D60BC /* DetailViewController.swift in Sources */,

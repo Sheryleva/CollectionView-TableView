@@ -10,18 +10,19 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var VM = ViewModel()
-    var arrP: [Movie] = []
-    var arrNS: [Movie] = []
-    var DetailVC = DetailViewController()
-    let imageCache = NSCache<NSString, UIImage>()
-    
     @IBOutlet weak var collView: UICollectionView!
-    
     @IBOutlet weak var tblView: UITableView!
+    
+    private var VM = ViewModel()
+    private var PopVM = PopularViewModel()
+    private var arrP = [Movie]()
+    private var arrNS = [Movie]()
+    private var DetailVC = DetailViewController()
+    private let imageCache = NSCache<NSString, UIImage>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.showSpinner(onView: self.view)
         tblView.delegate = self
         tblView.dataSource = self
         tblView.register(UINib(nibName: "CustomTableViewCell", bundle: nil), forCellReuseIdentifier: "tableCell")
@@ -34,20 +35,21 @@ class ViewController: UIViewController {
         registerNib()
     }
     
-    
     func getPopularMovies() {
-        VM.getDatafromViewModel(urlS: "https://api.themoviedb.org/3/movie/popular?api_key=6a24c2c42cad80dbfc4195f6bb695d57&language=en-US&page=1") {
+        PopVM.getDatafromViewModel(urlS: popularMoviesUrl) {
             model in
+            
             DispatchQueue.main.async {
-                self.arrP = model
+                self.arrP.append(contentsOf: model)
                 self.tblView.reloadData()
             }
         }
     }
     
     func getNowPlayingMovies() {
-        VM.getDatafromViewModel(urlS: "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=undefined&api_key=55957fcf3ba81b137f8fc01ac5a31fb5") {
+        VM.getDatafromViewModel(urlS: movieUrl) {
             model in
+            self.removeSpinner()
             DispatchQueue.main.async {
                 self.arrNS = model
                 self.collView.reloadData()
@@ -63,127 +65,58 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! CustomTableViewCell
-        guard let name = arrP[indexPath.row].title else {return UITableViewCell()}
-        guard let release = arrP[indexPath.row].release else {return UITableViewCell()}
-        guard let ratin = arrP[indexPath.row].vote_average else {return UITableViewCell()}
-        let rating = "Rating: " + "\(ratin)"
-        print(rating)
-        guard let Votes = arrP[indexPath.row].vote_average else {return UITableViewCell()}
-        guard let img = arrP[indexPath.row].image else {return UITableViewCell()}
-        let urlS = "https://image.tmdb.org/t/p/w500" + img
-        let url = URL(string: urlS)
-        guard let unwrap_url = url else {return UITableViewCell()}
-        guard let imageData = try? Data(contentsOf: unwrap_url) else {return UITableViewCell()}
-        let image = UIImage(data: imageData)
-        guard var imge = image else {return UITableViewCell()}
-        imge = resizeImage(image: imge, targetSize: CGSize(width: 80, height: 128))
-        self.imageCache.setObject(imge, forKey: NSString(string: img))
-        cell.title.text = name
-        cell.imageView?.image = imge
-        cell.relse.text = release
-        cell.ratng.text = rating
-        cell.progressVal = Int(Votes * 10)
-        return cell 
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as? CustomTableViewCell
+        let myObj = arrP[indexPath.row]
+        cell?.configure(myObj)
+        return cell ?? UITableViewCell()
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let name = arrP[indexPath.row].title else {return }
-        guard let release = arrP[indexPath.row].release else {return }
-        guard let ratin = arrP[indexPath.row].vote_average else {return }
-        let rating = "Rating: " + "\(ratin)"
-        print(rating)
-        guard let img = arrP[indexPath.row].image else {return }
-        let urlS = "https://image.tmdb.org/t/p/w500" + img
-        let url = URL(string: urlS)
-        guard let unwrap_url = url else {return }
-        guard let imageData = try? Data(contentsOf: unwrap_url) else {return }
-        let image = UIImage(data: imageData)
-        guard var imge = image else {return }
-        imge = resizeImage(image: imge, targetSize: CGSize(width: 240, height: 300))
         let st = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = st.instantiateViewController(identifier: "DetailViewController") as! DetailViewController
-        vc.img = imge
-        vc.titl = name
-        vc.rele = release
-        vc.text = arrP[indexPath.row].overview
-
-        navigationController?.present(vc, animated: true)
+        let vc = st.instantiateViewController(identifier: "DetailViewController") as? DetailViewController
+        vc?.movieObj = arrP[indexPath.row]
+        navigationController?.present(vc ?? UIViewController(), animated: true)
         
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if tblView.contentOffset.y >= (tblView.contentSize.height - tblView.frame.size.height) {
+            getPopularMovies()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastSectionIndex = tableView.numberOfSections - 1
+        let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
+        if indexPath.section ==  lastSectionIndex && indexPath.row == lastRowIndex {
+            let spinner = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
+            spinner.startAnimating()
+            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(44))
+            self.tblView.tableFooterView = spinner
+            self.tblView.tableFooterView?.isHidden = false
+        }
     }
 }
 
-
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return arrNS.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.reuseIdentifier,
-                                                         for: indexPath) as? CollectionViewCell {
-            
-            guard let img = arrNS[indexPath.row].image else {return UICollectionViewCell()}
-            let urlS = "https://image.tmdb.org/t/p/w500" + img
-            let url = URL(string: urlS)
-            guard let unwrap_url = url else {return UICollectionViewCell()}
-            guard let imageData = try? Data(contentsOf: unwrap_url) else { return UICollectionViewCell() }
-            let image = UIImage(data: imageData)
-            guard var imge = image else {return UICollectionViewCell()}
-            imge = resizeImage(image: imge, targetSize: CGSize(width: 128, height: 200))
-            self.imageCache.setObject(imge, forKey: NSString(string: img))
-            cell.configureCell(image: imge)
-            return cell
-        }
-        return UICollectionViewCell()
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.reuseIdentifier, for: indexPath) as? CollectionViewCell
+        let myObj = arrNS[indexPath.row]
+        cell?.configure(myObj)
+        return cell ?? UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let name = arrP[indexPath.row].title else {return }
-        guard let release = arrP[indexPath.row].release else {return }
-        guard let ratin = arrP[indexPath.row].vote_average else {return }
-        let rating = "Rating: " + "\(ratin)"
-        print(rating)
-        guard let img = arrP[indexPath.row].image else {return }
-        let urlS = "https://image.tmdb.org/t/p/w500" + img
-        let url = URL(string: urlS)
-        guard let unwrap_url = url else {return }
-        guard let imageData = try? Data(contentsOf: unwrap_url) else {return }
-        let image = UIImage(data: imageData)
-        guard var imge = image else {return }
-        imge = resizeImage(image: imge, targetSize: CGSize(width: 240, height: 300))
         let st = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = st.instantiateViewController(identifier: "DetailViewController") as! DetailViewController
-        vc.img = imge
-        vc.titl = name
-        vc.rele = release
-        vc.text = arrP[indexPath.row].overview
-        
-        navigationController?.present(vc, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let cell: CollectionViewCell = Bundle.main.loadNibNamed(CollectionViewCell.nibName,
-                                                                      owner: self,
-                                                                      options: nil)?.first as? CollectionViewCell else {
-            return CGSize.zero
-        }
-        guard let img = arrNS[indexPath.row].image else {return CGSize()}
-        let urlS = "https://image.tmdb.org/t/p/w500" + img
-        let url = URL(string: urlS)
-        guard let unwrap_url = url else {return CGSize()}
-        guard let imageData = try? Data(contentsOf: unwrap_url) else { return CGSize() }
-        let image = UIImage(data: imageData)
-        guard var imge = image else {return CGSize()}
-        imge = resizeImage(image: imge, targetSize: CGSize(width: 128, height: 200))
-        cell.configureCell(image: imge)
-        cell.setNeedsLayout()
-        cell.layoutIfNeeded()
-        let size: CGSize = cell.contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-        return CGSize(width: size.width, height: size.height)
+        let vc = st.instantiateViewController(identifier: "DetailViewController") as? DetailViewController
+        vc?.movieObj = arrNS[indexPath.row]
+        navigationController?.present(vc ?? UIViewController(), animated: true)
     }
     
     func registerNib() {
@@ -194,33 +127,8 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
         }
     }
     
-    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
-        let size = image.size
-        
-        let widthRatio  = targetSize.width  / image.size.width
-        let heightRatio = targetSize.height / image.size.height
-        
-        // Figure out what our orientation is, and use that to form the rectangle
-        var newSize: CGSize
-        if(widthRatio > heightRatio) {
-            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-        } else {
-            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
-        }
-        
-        // This is the rect that we've calculated out and this is what is actually used below
-        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-        
-        // Actually do the resizing to the rect using the ImageContext stuff
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.draw(in: rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage!
-    }
-    
 }
+
 
 
 

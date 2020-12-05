@@ -26,13 +26,14 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "347F0AF52555A618005D60BC"
+               BlueprintIdentifier = "34D4CD4C257B2DD40002F8B7"
                BuildableName = "HorizontalCollectionViewTests.xctest"
                BlueprintName = "HorizontalCollectionViewTests"
                ReferencedContainer = "container:HorizontalCollectionView.xcodeproj">
@@ -42,7 +43,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "347F0B002555A618005D60BC"
+               BlueprintIdentifier = "34D4CD68257B3A0A0002F8B7"
                BuildableName = "HorizontalCollectionViewUITests.xctest"
                BlueprintName = "HorizontalCollectionViewUITests"
                ReferencedContainer = "container:HorizontalCollectionView.xcodeproj">

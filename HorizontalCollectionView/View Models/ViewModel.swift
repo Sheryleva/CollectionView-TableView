@@ -7,23 +7,25 @@
 
 import Foundation
 
-class ViewModel{
-    private var apiH = APIhandler()
-    private var arr = [Movie]()
+class ViewModel: ProtocolToPassData {
     
-    func getDatafromViewModel(urlS: String, completion: @escaping ([Movie]) -> Void) {
-        apiH.getDataFromAPI(urlStr: urlS) { (model, response, error) in
-            DispatchQueue.main.async {
-                let data = model?.results
-                guard let model = data else {return}
-                self.arr = model
-                completion(self.arr)
-            }
-            
-        }
+    private var apiH: APIhandler?
+    var delegate: ProtocolToPassData?
+    
+    init(delegate: ProtocolToPassData) {
+        apiH = APIhandler.init(delegate: self)
     }
     
-    func getRows() -> Int {
-        return arr.count
+    func getDatafromViewModel(urlS: String) {
+        apiH?.getDataFromAPI(urlStr: urlS)
     }
+    
+    func didReceiveData(_ data: [Movie]) {
+        self.delegate?.didReceiveData(data)
+    }
+    
+    func didReceiveError(_ error: Error?) {
+        self.delegate?.didReceiveError(error)
+    }
+    
 }

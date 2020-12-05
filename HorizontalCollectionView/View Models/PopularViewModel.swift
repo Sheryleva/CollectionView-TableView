@@ -7,25 +7,28 @@
 
 import Foundation
 
-class PopularViewModel{
-    private var apiH = APIhandler()
-    private var arr = [Movie]()
+class PopularViewModel: ProtocolToPassPopular {
+    
+    private var apiH: APIhandler?
+    var delegate2: ProtocolToPassPopular?
     private var page = 0
     
-    func getDatafromViewModel(urlS: String, completion: @escaping ([Movie]) -> Void) {
-        page += 1
-        let urlString = urlS + "\(page)"
-        apiH.getDataFromAPI(urlStr: urlString) { (model, response, error) in
-            DispatchQueue.main.async {
-                let data = model?.results
-                guard let model = data else {return}
-                self.arr = model
-                completion(self.arr)
-            }
-        }
+    init(delegate2: ProtocolToPassPopular) {
+        apiH = APIhandler.init(delegate2: self)
     }
     
-    func getRows() -> Int {
-        return arr.count
+    func getDatafromViewModel(urlS: String) {
+        page += 1
+        let urlString = urlS + "\(page)"
+        apiH?.getDataFromAPI(urlStr: urlString)
     }
+    
+    func didReceivePopular(_ data: [Movie]) {
+        self.delegate2?.didReceivePopular(data)
+    }
+    
+    func didReceiveErrorPopular(_ error: Error?) {
+        self.delegate2?.didReceiveErrorPopular(error)
+    }
+    
 }

@@ -52,10 +52,5 @@ class CustomTableViewCell: UITableViewCell {
         progressVal = Int(Votes * 10)
     }
     
-    
-    
-    
-    
-    
 }
 

@@ -9,15 +9,26 @@ import XCTest
 @testable import HorizontalCollectionView
 
 class PlayingMoviesTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
     
+//    var sut: APIHandler?
+//    
+//    override func setUpWithError() throws {
+//        sut = APIHandler()
+//    }
+//
+//    override func tearDownWithError() throws {
+//        sut = nil
+//    }
+//    
+//    func testgetDataFromAPI() {
+//        let moviesExpectation = expectation(description: "Wait for API Call")
+//        sut.getDataFromAPI {
+//          XCTAssertNotNil()
+//          moviesExpectation.fulfill()
+//        }
+//        waitForExpectations(timeout: 1, handler: nil)
+//    }
+//    
+
 
 }

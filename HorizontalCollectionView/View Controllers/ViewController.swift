@@ -8,13 +8,15 @@
 import UIKit
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ProtocolToPassData, ProtocolToPassPopular {
     
     @IBOutlet weak var collView: UICollectionView!
     @IBOutlet weak var tblView: UITableView!
     
-    private var VM = ViewModel()
-    private var PopVM = PopularViewModel()
+    private var VM: ViewModel?
+    var delegate: ProtocolToPassData?
+    var delegate2: ProtocolToPassPopular?
+    private var PopVM: PopularViewModel?
     private var arrP = [Movie]()
     private var arrNS = [Movie]()
     private var DetailVC = DetailViewController()
@@ -23,6 +25,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.showSpinner(onView: self.view)
+        VM = ViewModel(delegate: self)
+        VM?.delegate = self
+        VM?.getDatafromViewModel(urlS: movieUrl)
+        
+        PopVM = PopularViewModel(delegate2: self)
+        PopVM?.delegate2 = self
+        PopVM?.getDatafromViewModel(urlS: popularMoviesUrl)
+        
         tblView.delegate = self
         tblView.dataSource = self
         tblView.register(UINib(nibName: "CustomTableViewCell", bundle: nil), forCellReuseIdentifier: "tableCell")
@@ -30,34 +40,36 @@ class ViewController: UIViewController {
         collView.dataSource = self
         let nib = UINib(nibName: CollectionViewCell.nibName, bundle: nil)
         collView.register(nib, forCellWithReuseIdentifier: "collectionCell")
-        getPopularMovies()
-        getNowPlayingMovies()
         registerNib()
+        
     }
     
-    func getPopularMovies() {
-        PopVM.getDatafromViewModel(urlS: popularMoviesUrl) {
-            model in
-            
-            DispatchQueue.main.async {
-                self.arrP.append(contentsOf: model)
-                self.tblView.reloadData()
-            }
+    func didReceiveData(_ data: [Movie]) {
+        arrNS = data
+        DispatchQueue.main.async {
+            self.collView.reloadData()
+        }
+        print(arrNS)
+    }
+    
+    func didReceiveError(_ error: Error?) {
+        VM?.didReceiveError(error)
+        
+    }
+    
+    func didReceivePopular(_ data: [Movie]) {
+        self.removeSpinner()
+        arrP.append(contentsOf: data)
+        DispatchQueue.main.async {
+            self.tblView.reloadData()
         }
     }
     
-    func getNowPlayingMovies() {
-        VM.getDatafromViewModel(urlS: movieUrl) {
-            model in
-            self.removeSpinner()
-            DispatchQueue.main.async {
-                self.arrNS = model
-                self.collView.reloadData()
-            }
-        }
+    func didReceiveErrorPopular(_ error: Error?) {
+        PopVM?.didReceiveErrorPopular(error)
     }
+    
 }
-
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -82,7 +94,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if tblView.contentOffset.y >= (tblView.contentSize.height - tblView.frame.size.height) {
-            getPopularMovies()
+            PopVM?.getDatafromViewModel(urlS: popularMoviesUrl)
+            
         }
     }
     

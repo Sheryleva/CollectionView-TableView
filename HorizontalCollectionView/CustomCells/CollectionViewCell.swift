@@ -11,7 +11,6 @@ class CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imgView: UIImageView!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -24,8 +23,12 @@ class CollectionViewCell: UICollectionViewCell {
         return "CollectionViewCell"
     }
     
-    func configureCell(image: UIImage) {
-        self.imgView.image = image
+    func configure(_ movie: Movie) {
+        guard let img = movie.image else {return}
+        var image = UIImage()
+        image = image.getImage(img, CGSize(width: 128, height: 200))
+        imgView?.image = image
+        
     }
     
     

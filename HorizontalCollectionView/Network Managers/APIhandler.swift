@@ -7,7 +7,7 @@
 
 import Foundation
 
-class APIhandler {
+struct APIhandler {
     
     func getDataFromAPI(urlStr: String, completion: @escaping (MoviesInfo?, URLResponse?, Error?)-> Void) {
         let url = URL(string: urlStr)

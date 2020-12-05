@@ -8,37 +8,35 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-    var img: UIImage?
-    var titl: String?
-    var rele: String?
-    var text: String?
     
     @IBOutlet weak var receiveImage: UIImageView!
-    
     @IBOutlet weak var receiveTitle: UILabel!
-    
     @IBOutlet weak var receiveRelease: UILabel!
-    
     @IBOutlet weak var receiveText: UITextView!
     
+    var movieObj = Movie()
+    let imageCache = NSCache<NSString, UIImage>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clear
-        
-        self.receiveImage.image = img
-        self.receiveTitle.text = titl
-        self.receiveRelease.text = rele
-        self.receiveText.text = text
-        
+        configure()
     }
-    
     
     @IBAction func ExitDetailVC(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
     
-
-   
-
+    func configure() {
+        guard let img = movieObj.image else {return }
+        var image = UIImage()
+        image = image.getImage(img, CGSize(width: 240, height: 300))
+        self.imageCache.setObject(image, forKey: NSString(string: img))
+        self.receiveImage.image = image
+        self.receiveTitle.text = movieObj.title
+        self.receiveRelease.text = movieObj.release
+        self.receiveText.text = movieObj.overview
+    }
+    
+    
 }

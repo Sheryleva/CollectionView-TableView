@@ -6,7 +6,7 @@ https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=undefined&api
 
 **1. First Screen - Movies List with 2 categories of Movies: 
 a. "Now Playing" - CollectionView
-b. "Popular" - TableView ** \br
+b. "Popular" - TableView **
 
 [![Screen-Shot-2020-11-24-at-1-35-33-PM.png](https://i.postimg.cc/66fkCzgy/Screen-Shot-2020-11-24-at-1-35-33-PM.png)](https://postimg.cc/6TTbXV9X)
 

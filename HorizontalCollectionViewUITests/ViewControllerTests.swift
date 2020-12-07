@@ -40,12 +40,14 @@ class ViewControllerTests: XCTestCase {
         app.launch()
         
         let tablesQuery = XCUIApplication().tables
-        let button = app.buttons["Button"]
+        
         tablesQuery/*@START_MENU_TOKEN@*/.cells.containing(.staticText, identifier:"Fatman")/*[[".cells.containing(.staticText, identifier:\"Rating: 6.0\")",".cells.containing(.staticText, identifier:\"Fatman\")"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.children(matching: .other).element(boundBy: 0).tap()
-        button.tap()
-        XCUIApplication().tables/*@START_MENU_TOKEN@*/.staticTexts["Vampire Virus"]/*[[".cells.staticTexts[\"Vampire Virus\"]",".staticTexts[\"Vampire Virus\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.swipeUp()
-             
-                        
+        
+        app.buttons["Button"].tap()
+        tablesQuery/*@START_MENU_TOKEN@*/.cells.containing(.staticText, identifier:"Tenet").element/*[[".cells.containing(.staticText, identifier:\"Rating: 7.4\").element",".cells.containing(.staticText, identifier:\"2020-08-22\").element",".cells.containing(.staticText, identifier:\"Tenet\").element"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.swipeUp()
+        tablesQuery/*@START_MENU_TOKEN@*/.cells.containing(.staticText, identifier:"Upside-Down Magic").element/*[[".cells.containing(.staticText, identifier:\"Rating: 7.6\").element",".cells.containing(.staticText, identifier:\"2020-07-31\").element",".cells.containing(.staticText, identifier:\"Upside-Down Magic\").element"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.swipeUp()
+     
+                                        
     }
 
 }

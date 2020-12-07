@@ -11,14 +11,17 @@ class PopularViewModel: ProtocolToPassPopular {
     
     private var apiH: APIhandler?
     var delegate2: ProtocolToPassPopular?
+    var urlSession: URLSession?
     private var page = 0
     
-    init(delegate2: ProtocolToPassPopular) {
-        apiH = APIhandler.init(delegate2: self)
+    init(delegate2: ProtocolToPassPopular, session: URLSession?) {
+        self.urlSession = session
+        apiH = APIhandler.init(delegate2: self, session: urlSession)
     }
     
     func getDatafromViewModel(urlS: String) {
         page += 1
+        guard page <= 500 else {return}
         let urlString = urlS + "\(page)"
         apiH?.getDataFromAPI(urlStr: urlString)
     }

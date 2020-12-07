@@ -10,25 +10,31 @@ import XCTest
 
 class PlayingMoviesTests: XCTestCase {
     
-//    var sut: APIHandler?
-//    
-//    override func setUpWithError() throws {
-//        sut = APIHandler()
-//    }
-//
-//    override func tearDownWithError() throws {
-//        sut = nil
-//    }
-//    
-//    func testgetDataFromAPI() {
-//        let moviesExpectation = expectation(description: "Wait for API Call")
-//        sut.getDataFromAPI {
-//          XCTAssertNotNil()
-//          moviesExpectation.fulfill()
-//        }
-//        waitForExpectations(timeout: 1, handler: nil)
-//    }
-//    
+    var sut: APIhandler?
+    var protocolTo: ProtocolToPassData?
+    let mockSession = MockSession()
+    
+    override func setUpWithError() throws {
+        sut = APIhandler.init(delegate: ViewController(), session: mockSession)
+    }
 
+    override func tearDownWithError() throws {
+        sut = nil
+    }
+    
+    func testFetchTodoItemsWithoutExpectation() {
+        let mockSession = MockSession()
+        let sut = APIhandler(delegate: ViewController(), session: mockSession)
+        XCTAssertNotNil(sut.getDataFromAPI)
+    }
 
+}
+
+class MockSession: SessionProtocol {
+    func fetchData(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        let movies = Movie(popularity: 10, votes: 10, image: "", backdrop_path: "", lang: "", orgTitle: "My title", title: "My title", vote_average: 10, overview: "", release: "")
+        let todo = MoviesInfo(results: [movies])
+        let data = try? JSONEncoder().encode([todo])
+        completion(data, nil, nil)
+    }
 }

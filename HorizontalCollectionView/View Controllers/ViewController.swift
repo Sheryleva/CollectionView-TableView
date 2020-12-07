@@ -25,11 +25,11 @@ class ViewController: UIViewController, ProtocolToPassData, ProtocolToPassPopula
     override func viewDidLoad() {
         super.viewDidLoad()
         self.showSpinner(onView: self.view)
-        VM = ViewModel(delegate: self)
+        VM = ViewModel(delegate: self, session: URLSession.shared)
         VM?.delegate = self
         VM?.getDatafromViewModel(urlS: movieUrl)
         
-        PopVM = PopularViewModel(delegate2: self)
+        PopVM = PopularViewModel(delegate2: self, session: URLSession.shared)
         PopVM?.delegate2 = self
         PopVM?.getDatafromViewModel(urlS: popularMoviesUrl)
         

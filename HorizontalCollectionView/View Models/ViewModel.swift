@@ -9,15 +9,17 @@ import Foundation
 
 class ViewModel: ProtocolToPassData {
     
-    private var apiH: APIhandler?
+    var apiH: APIhandler?
+    var urlSession: SessionProtocol?
     var delegate: ProtocolToPassData?
     
-    init(delegate: ProtocolToPassData) {
-        apiH = APIhandler.init(delegate: self)
+    init(delegate: ProtocolToPassData, session: SessionProtocol?) {
+        self.urlSession = session
+        apiH = APIhandler.init(delegate: self, session: urlSession)
     }
     
     func getDatafromViewModel(urlS: String) {
-        apiH?.getDataFromAPI(urlStr: urlS)
+        self.apiH?.getDataFromAPI(urlStr: urlS)
     }
     
     func didReceiveData(_ data: [Movie]) {

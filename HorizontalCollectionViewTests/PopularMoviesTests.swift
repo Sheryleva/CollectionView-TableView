@@ -6,27 +6,27 @@
 //
 
 import XCTest
+@testable import HorizontalCollectionView
 
 class PopularMoviesTests: XCTestCase {
+    
+    var sut: DetailViewController?
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        sut = DetailViewController()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        sut = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testDetailVC() throws {
+//        XCTAssertNotNil(sut?.receiveImage)
+//        XCTAssertNotNil(sut?.receiveText)
+//        XCTAssertNotNil(sut?.receiveTitle)
+//        XCTAssertNotNil(sut?.receiveRelease)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+    
 
 }

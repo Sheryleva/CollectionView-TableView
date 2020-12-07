@@ -10,12 +10,15 @@ import Foundation
 class APIhandler {
     var delegate: ProtocolToPassData?
     var delegate2: ProtocolToPassPopular?
+    var urlSession: SessionProtocol?
     
-    init(delegate: ProtocolToPassData) {
+    init(delegate: ProtocolToPassData, session: SessionProtocol?) {
+        self.urlSession = session
         self.delegate = delegate
     }
     
-    init(delegate2: ProtocolToPassPopular) {
+    init(delegate2: ProtocolToPassPopular, session: SessionProtocol?) {
+        self.urlSession = session
         self.delegate2 = delegate2
     }
     
@@ -26,7 +29,7 @@ class APIhandler {
             return
             
         }
-        URLSession.shared.dataTask(with: unwrap_url) { (data, response, error) in
+        urlSession?.fetchData(url: unwrap_url) { (data, response, error) in
             guard error == nil else {
                 print("Unable to decode")
                 self.delegate?.didReceiveError(error)
@@ -43,7 +46,27 @@ class APIhandler {
             catch {
                 print("Unable to decode")
             }
-        }.resume()
+        }
     }
     
+}
+
+protocol SessionProtocol {
+    func fetchData(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> Void)
+}
+
+extension URLSession: SessionProtocol {
+    func fetchData(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        let task = dataTask(with: url) { (data, response, error) in
+            guard data != nil else
+            {
+                print("Data is nil")
+                completion(nil, nil, error)
+                return
+                
+            }
+            completion(data,response,nil)
+        }
+        task.resume()
+    }
 }
